@@ -1,19 +1,20 @@
 package com.amazonaws.lambda.securitycount.resp;
 
 public class RecordsCountResp {
-	private Integer offeringIdCount;
-	private Integer issueIdCount;
-
-	public Integer getIssueIdCount() {
-		return issueIdCount;
+	
+	private SecurityRecordCount secRecordCount;
+	private OffSecUnderWriteLevel offSecUnderWriteLevel;
+	
+	public SecurityRecordCount getSecRecordCount() {
+		return secRecordCount;
 	}
-	public void setIssueIdCount(Integer issueIdCount) {
-		this.issueIdCount = issueIdCount;
+	public void setSecRecordCount(SecurityRecordCount secRecordCount) {
+		this.secRecordCount = secRecordCount;
 	}
-	public Integer getOfferingIdCount() {
-		return offeringIdCount;
+	public OffSecUnderWriteLevel getOffSecUnderWriteLevel() {
+		return offSecUnderWriteLevel;
 	}
-	public void setOfferingIdCount(Integer offeringIdCount) {
-		this.offeringIdCount = offeringIdCount;
+	public void setOffSecUnderWriteLevel(OffSecUnderWriteLevel offSecUnderWriteLevel) {
+		this.offSecUnderWriteLevel = offSecUnderWriteLevel;
 	}
 }
