@@ -1,0 +1,101 @@
+
+check this link 
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html#HowItWorks.DataTypes
+
+
+
+############################  task 2
+
+Table table = dynamoDB.getTable("Offering_Isuue_Level");
+		final String offeringIdAtribute = "Offering_ID";
+		ScanFilter filter = new ScanFilter(offeringIdAtribute).exists();
+		ItemCollection<ScanOutcome> items = table.scan(filter);
+		Iterator<Item> iter = items.iterator();
+		while (iter.hasNext()) {
+			iter.next();
+		}
+		System.out.println(items.getAccumulatedItemCount());
+		return items.getAccumulatedItemCount();
+		
+		
+############################ task 1
+
+
+Table table = dynamoDB.getTable("Offering_Level");		
+		 Map<String, Object> expressionAttributeValues = new HashMap<String, Object>();
+	        expressionAttributeValues.put(":timestamp", "2017-10-16");
+	        ItemCollection<ScanOutcome> items = table.scan("Completed_Time_Stamp < :timestamp", 
+	        		"Offering_ID, Completed_Time_Stamp, Legal_Description", 
+	        		null,
+	            expressionAttributeValues);
+
+	        Iterator<Item> iterator = items.iterator();
+	        while (iterator.hasNext()) {
+	            System.out.println(iterator.next().toJSONPretty());
+	        }
+	        System.out.println(items.getAccumulatedItemCount());
+			return items.getAccumulatedItemCount();
+			
+			
+############################# task3
+
+Table table = dynamoDB.getTable("Offering_Isuue_Level");
+		
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Date date = new Date();
+		
+		String today = dateFormat.format(date);
+		today= today.replaceAll("\\s+","");
+		 Map<String, Object> expressionAttributeValues = new HashMap<String, Object>();
+	        expressionAttributeValues.put(":pr", today);
+
+	        ItemCollection<ScanOutcome> items = table.scan("Expected_Closing_Date = :pr", 
+	        		"Isuue_ID, Offering_ID,Base_CUSIP, Expected_Closing_Date,Issue_Offering_Amount,Issuer_ID", 
+	        		null,
+	            expressionAttributeValues);
+             
+	       
+	        Iterator<Item> iterator = items.iterator();
+	        while (iterator.hasNext()) {
+	            System.out.println(iterator.next().toJSONPretty());
+	        }
+	        System.out.println(items.getAccumulatedItemCount());
+			return items.getAccumulatedItemCount();
+			
+			
+			
+#############################   task4
+Table table = dynamoDB.getTable("Offering_Isuue_Level");
+		System.out.println("table is:" + table.toString() );
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Date date = new Date();
+		Date present_date= date;
+		System.out.println("present date is ...... " + dateFormat.format(date));
+		String today = dateFormat.format(date);
+		 
+		today= today.replaceAll("\\s+","");
+		
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime( date );
+		cal.add( Calendar.DATE, 7 );
+		Date date1 = new Date();
+		Date nextDate = cal.getTime();
+		System.out.println("present 77777777 date is ...... " + dateFormat.format(nextDate));
+		String next_7_day = dateFormat.format(nextDate);
+		 Map<String, Object> expressionAttributeValues = new HashMap<String, Object>();
+	        expressionAttributeValues.put(":pr", today);
+	        expressionAttributeValues.put(":pr1", next_7_day);
+
+	        ItemCollection<ScanOutcome> items = table.scan("Expected_Closing_Date BETWEEN :pr and  :pr1", 
+	        		"Isuue_ID, Offering_ID,Base_CUSIP, Expected_Closing_Date,Issue_Offering_Amount,Issuer_ID", 
+	        		null,
+	            expressionAttributeValues);
+             
+	        System.out.println("Scan of " + table + " for items with a price less than 100.......");
+	        Iterator<Item> iterator = items.iterator();
+	        while (iterator.hasNext()) {
+	            System.out.println(iterator.next().toJSONPretty());
+	        }
+	        System.out.println(items.getAccumulatedItemCount());			
+		
